@@ -1,0 +1,7 @@
+INDEX VERSION 1.127+/home/abdou/workspacecpurseracourses/.metadata/.plugins/org.eclipse.jdt.core
+2089348824.index
+3514540884.index
+893253508.index
+1049668143.index
+63041311.index
+3944568416.index

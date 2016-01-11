@@ -1,0 +1,29 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String s1 = new String("one (1), two (2), three (3)");
+		System.out.println(s1);
+		List<String>ss=getTokens("[a-z()0-9]+"",s1);
+	    for (int i = 0; i < ss.size(); i++) {
+	    	System.out.println(ss.get(i));
+	    }
+	}
+	protected static List<String> getTokens(String pattern,String text)
+	{
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern tokSplitter = Pattern.compile(pattern);
+		Matcher m = tokSplitter.matcher(text);
+		
+		while (m.find()) {
+			tokens.add(m.group());
+		}
+		
+		return tokens;
+	}
+}

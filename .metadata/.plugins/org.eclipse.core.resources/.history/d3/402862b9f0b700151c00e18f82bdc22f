@@ -1,0 +1,25 @@
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String s1 = new String("Hamada yel3ab");
+		System.out.println(s1);
+		 s1.split("%+");
+	}
+	public static int mystery(String s)
+	{
+	    char[] letters = s.toCharArray();
+	    int x = 0;
+	    for (int i = 0; i < letters.length; i++) {
+	        if (letters[i] == ' ') {
+	           letters[i] = '_';
+	           x++;
+	        }
+	    }
+	    System.out.println("inside1");
+		System.out.println(s);
+	    System.out.println("inside1");
+	    return x;
+	}
+}
