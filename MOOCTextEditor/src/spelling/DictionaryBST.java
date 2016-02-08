@@ -20,22 +20,39 @@ public class DictionaryBST implements Dictionary
      * @return true if the word was added to the dictionary 
      * (it wasn't already there). */
     public boolean addWord(String word) {
+    if(dict ==null)
+    	dict= new TreeSet<>();
     	// TODO: Implement this method
-        return false;
+    	String wordToAdd = word.toLowerCase();
+    	if (dict.contains(wordToAdd)) {
+    		return false;
+    	} else {
+	    	dict.add(wordToAdd);
+	        return true;
+    	}
     }
 
 
     /** Return the number of words in the dictionary */
     public int size()
     {
+    	  if(dict ==null)
+    		  return 0;
     	// TODO: Implement this method
-        return 0;
+    	return dict.size();
     }
 
     /** Is this a word according to this dictionary? */
     public boolean isWord(String s) {
+    	  if(dict ==null)
+    		  return false;
     	//TODO: Implement this method
-        return false;
+    	String sToCheck = s.toLowerCase();
+    	if (dict.contains(sToCheck)) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
 }

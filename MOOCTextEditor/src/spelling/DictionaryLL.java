@@ -1,5 +1,6 @@
 package spelling;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -21,21 +22,54 @@ public class DictionaryLL implements Dictionary
      * (it wasn't already there). */
     public boolean addWord(String word) {
     	// TODO: Implement this method
-        return false;
+    	// TODO: Implement this method
+    	 if (dict==null)
+    	 {
+    		 dict = new LinkedList<>();
+    	 }
+    	
+    	String wordToAdd = word.toLowerCase();
+    	if (dict.contains(wordToAdd)) {
+    		return false;
+    	} else {
+    		dict.add(wordToAdd);
+    		return true;
+          
+    	}
+    	 
+    
     }
 
 
     /** Return the number of words in the dictionary */
     public int size()
     {
-        // TODO: Implement this method
-        return 0;
+    	int counter=0;
+     	if(dict!=null && !dict.isEmpty())
+     	{
+    	Iterator i= dict.iterator();
+    	while(i.hasNext())
+    	{
+    		i.next();
+    		counter++;
+    	}
+     	}
+        return counter;
     }
 
     /** Is this a word according to this dictionary? */
     public boolean isWord(String s) {
-        //TODO: Implement this method
-        return false;
+    	//TODO: Implement this method
+    	String sToCheck = s.toLowerCase();
+    	if(dict!=null && !dict.isEmpty())
+    	{
+    	if (dict.contains(sToCheck)) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    	}
+    	return false;
     }
 
     

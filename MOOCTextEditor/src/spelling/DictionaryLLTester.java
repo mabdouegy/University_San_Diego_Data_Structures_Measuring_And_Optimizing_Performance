@@ -28,6 +28,7 @@ public class DictionaryLLTester {
 	@Before
 	public void setUp() throws Exception 
 	{
+		System.out.println("set up");
 		emptyDict = new DictionaryLL();
 		smallDict = new DictionaryLL();
 		largeDict = new DictionaryLL();
@@ -39,6 +40,9 @@ public class DictionaryLLTester {
 		smallDict.addWord("subsequent");
 		
 		DictionaryLoader.loadDictionary(largeDict, dictFile);
+		System.out.println("smallDict size["+smallDict.size()+"]");
+		System.out.println("largeDict size["+largeDict.size()+"]");
+		System.out.println("emptyDict size["+emptyDict.size()+"]");
 	}
 
 	
@@ -47,15 +51,17 @@ public class DictionaryLLTester {
 	@Test
 	public void testSize()
 	{
-		assertEquals("Testing size for empty dict", 0, emptyDict.size());
 		assertEquals("Testing size for small dict", 4, smallDict.size());
 		assertEquals("Testing size for large dict", 4438, largeDict.size());
+		assertEquals("Testing size for empty dict", 0, emptyDict.size());
+ 
 	}
 	
 	/** Test the isWord method */
 	@Test
 	public void testIsWord()
 	{
+	 
 		assertEquals("Testing isWord on empty: Hello", false, emptyDict.isWord("Hello"));
 		assertEquals("Testing isWord on small: Hello", true, smallDict.isWord("Hello"));
 		assertEquals("Testing isWord on large: Hello", true, largeDict.isWord("Hello"));

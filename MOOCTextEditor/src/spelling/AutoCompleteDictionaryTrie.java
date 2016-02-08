@@ -1,10 +1,7 @@
 package spelling;
 
-import java.util.List;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
@@ -27,9 +24,24 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * For the basic part of the assignment (part 2), you should ignore the word's case.
 	 * That is, you should convert the string to all lower case as you insert it. */
 	public boolean addWord(String word)
-	{
-	    //TODO: Implement this method.
+	{//TODO: Implement this method.
+		String wordToAdd = word.toLowerCase();
+		TrieNode node = root;
+		for (int i = 0; i < wordToAdd.length(); i++) {
+			char c = wordToAdd.charAt(i);
+			if (node.getValidNextCharacters().contains(c)) {
+				node = node.getChild(c);
+			} else {
+				node = node.insert(c);
+			}
+		}
+		if (!node.endsWord()) {
+			node.setEndsWord(true);
+			size++;
+			return true;
+		}
 	    return false;
+ 
 	}
 	
 	/** 
@@ -39,7 +51,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
-	    return 0;
+	    return size;
 	}
 	
 	
@@ -47,8 +59,19 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	@Override
 	public boolean isWord(String s) 
 	{
-	    // TODO: Implement this method
-		return false;
+		String lowerCase = s.toLowerCase();
+		TrieNode node = root;
+		for (int i = 0; i < lowerCase.length(); i++) 
+		{
+			if (node.getValidNextCharacters().contains(lowerCase.charAt(i)))  
+				node = node.getChild(lowerCase.charAt(i));
+			 else  
+				return false;		 
+		}
+		if (node.endsWord())  
+			return true;
+		else
+			return false;
 	}
 
 	/** 
@@ -76,7 +99,53 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
     	 
-         return null;
+    	 //Trying to find the stem in Trie
+      	 String prefixToCheckLowerCase = prefix.toLowerCase();
+    	 int completionsCount = 0;
+    	 List<String> completions = new LinkedList<String>();
+    	 TrieNode traversal = root;
+    	 for (int i = 0; i < prefixToCheckLowerCase.length(); i++)
+    	 {
+    		 if (traversal.getValidNextCharacters().contains(prefixToCheckLowerCase.charAt(i)))
+    		{
+ 				traversal = traversal.getChild(prefixToCheckLowerCase.charAt(i));
+ 			} 
+    		 //Means  stem not found, returns an empty list
+    		 else
+ 				return completions;
+    	 }
+    	 //If current word is an end word, increment the counter and add it to compeltions list
+    	 if (traversal.endsWord()) 
+    	 {
+    		 completionsCount=1;
+    		 completions.add(traversal.getText());
+    	 }
+    	 
+    	 List<TrieNode> nodesToBeSearched = new LinkedList<TrieNode>();
+    	 List<Character> ChildCharaterList = new LinkedList<Character>(traversal.getValidNextCharacters());
+    	 //Filling the list with children of the current node, first level of of the breadth first search 
+    	 for (int i=0; i<ChildCharaterList.size(); i++) 
+    	 {
+    		 nodesToBeSearched.add(traversal.getChild(ChildCharaterList.get(i)));
+    	 }
+    	 //while loop for the linked list elements and see if any compeltions exists , inside it we will also check each node children and add them to the list!!!
+    	 while (nodesToBeSearched!=null  && nodesToBeSearched.size()>0 && completionsCount < numCompletions)
+    	 {
+    		 TrieNode trieNode = nodesToBeSearched.remove(0);
+    		 if (trieNode.endsWord()) 
+    		 {
+    			 completionsCount++;
+    			 completions.add(trieNode.getText());
+    		 }
+    		 
+    		 List<Character> subTrieNodeCholdren = new LinkedList<Character>(trieNode.getValidNextCharacters());
+    		 //Adding all next level tries to the linked list , kinda recursive!!!
+        	 for (int i=0; i<subTrieNodeCholdren.size();i++) 
+        	 {
+        		 nodesToBeSearched.add(trieNode.getChild(subTrieNodeCholdren.get(i)));
+        	 }
+    	 }
+         return completions;
      }
 
  	// For debugging
